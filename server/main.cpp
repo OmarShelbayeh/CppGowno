@@ -85,9 +85,10 @@ int waitForConnections(int serverSocket, sockaddr_storage serverStorage, socklen
     cln client1{cln1Soc, client1addr};
     cln client2{cln2Soc, client2addr};
 
-    char buf[32] = "Game Starting";
-    send(client1.cfd, buf, strlen(buf), 0);
-    send(client2.cfd, buf, strlen(buf), 0);
+    char white[32] = "WHITE";
+    char red[32] = "RED";
+    send(client1.cfd, white, strlen(white), 0);
+    send(client2.cfd, red, strlen(red), 0);
 
     game.player1 = client1;
     game.player2 = client2;
@@ -157,59 +158,3 @@ int main()
     close(game.player2.cfd);
     return 1;
 }
-
-// sendData(int cfd, char buf[], int dataLength) // Funkcja sluzaca wysylaniu danych do momentu napotkania znaku konca danych.
-//                                               // Zwraca ilsoc wyslanych danych w razie powodzenia oraz 0 w razie bledu
-// {
-//     int allDataSend = 0;   // Czy wyslano wszystkie dane
-//     int totalDataSend = 0; // Ilosc danych wyslana dotychczas
-
-//     while (allDataSend == 0)
-//     {
-
-//         int writeResult = write(cfd, buf + totalDataSend, dataLength - totalDataSend); // Wysylamy dane przesuwajac sie po buforze
-
-//         if (writeResult == 0 || writeResult == -1)
-//         { // Obsluga bledow
-//             printf("%s\n", strerror(errno));
-//             return 0;
-//         }
-//         else
-//         {
-//             totalDataSend = totalDataSend + writeResult;
-
-//             if (buf[totalDataSend - 1] == 'X') // Jezeli osiagnieto znak konca danych
-//                 allDataSend = 1;               // Koniec wysylania
-//         }
-//     }
-
-//     return totalDataSend;
-// }
-
-// int receiveData(int cfd, char buf[], int dataLength) // Funkcja analogiczna do sendData tylko sluzaca odbieraniu danych
-// {
-//     memset(buf, '*', 66);
-
-//     int allDataReceive = 0;
-//     int totalDataReceive = 0;
-
-//     while (allDataReceive == 0)
-//     {
-
-//         int readResult = read(cfd, buf + totalDataReceive, dataLength - totalDataReceive);
-
-//         if (readResult == 0 || readResult == -1)
-//         {
-//             return 0;
-//         }
-//         else
-//         {
-//             totalDataReceive = totalDataReceive + readResult;
-
-//             if (buf[totalDataReceive - 1] == 'X')
-//                 allDataReceive = 1;
-//         }
-//     }
-
-//     return totalDataReceive;
-// }

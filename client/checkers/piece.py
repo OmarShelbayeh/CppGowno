@@ -34,8 +34,5 @@ class Piece:
     def move(self, row, col):
         self.row = row
         self.col = col
+        # print("PIECE.MOVE",self.row, self.col)
         self.calc_pos()
-
-
-    def __repr__(self):
-        return str(self.color)
